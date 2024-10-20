@@ -1,31 +1,47 @@
-class PubSub {
-    constructor() {
-        this.events = {};
-    }
+// class PubSub {
+//     constructor() {
+//         this.events = {};
+//     }
 
-    subscribe(event, cb) {
-        debugger
-        if(!this.events[event]) {
-            this.events[event] = [];
+//     subscribe(event, cb) {
+//         if(!this.events[event]) {
+//             this.events[event] = [];
+//         }
+//         this.events[event].push(cb)
+//     }
+
+//     unsubscribe(event, cb) {
+//         if(!this.events[event]) {
+//             return;
+//         }
+//         this.events[event] =  this.events[event].filter((callbacks) => {
+//             return callbacks !== cb
+//         })
+//     }
+
+//     publish(event, data) {
+//         if(!this.events[event]) {
+//             return;
+//         }
+//         this.events[event].forEach(cb => {
+//             cb(data);
+//         });
+//     }
+// }
+
+function PubSub() {
+    let events = {};
+    this.subscribe = function(event, cb) {
+        if(!events[event]) {
+            events[event] = [];
         }
-        this.events[event].push(cb)
+        events[event].push(cb)
     }
-
-    unsubscribe(event, cb) {
-        if(!this.events[event]) {
+    this.publish = function(event, data) {
+        if(!events[event]) {
             return;
         }
-        this.events[event] =  this.events[event].filter((callbacks) => {
-            return callbacks !== cb
-        })
-    }
-
-    publish(event, data) {
-        debugger
-        if(!this.events[event]) {
-            return;
-        }
-        this.events[event].forEach(cb => {
+        events[event].forEach(cb => {
             cb(data);
         });
     }
